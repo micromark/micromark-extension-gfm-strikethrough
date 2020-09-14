@@ -33,7 +33,7 @@
   ],
   "dependencies": {
     "fault": "^1.0.0",
-    "micromark": "^2.3.0"
+    "micromark": "^2.4.0"
   },
   "devDependencies": {
     "nyc": "^15.0.0",
