@@ -32,17 +32,17 @@ npm install micromark-extension-gfm-strikethrough
 
 ## API
 
-### `syntax`
-
 ### `html`
 
-> Note: `syntax` is the default export of this module, html is available at
+### `syntax`
+
+> Note: `syntax` is the default export of this module, `html` is available at
 > `micromark-extension-gfm-strikethrough/html`.
 
-Support strikethrough (~~like this~~)
+Support strikethrough (~~like this~~).
 The exports are extensions, respectively for the micromark parser (to tokenize
-strikethrough, can be passed in `extensions`) and the default HTML compiler
-(to compile as a `<del>` element, can be passed in `htmlExtensions`).
+strikethrough; can be passed in `extensions`) and the default HTML compiler
+(to compile as `<del>` elements; can be passed in `htmlExtensions`).
 
 ## Related
 
