@@ -8,15 +8,13 @@
 [![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
-**[micromark][]** extension to support GitHub flavored markdown strikethrough
-(~~like this~~).
+**[micromark][]** extension to support GitHub flavored markdown
+[strikethrough][] (~~like this~~).
+This syntax extension matches either the GFM spec (only two tildes work) or
+github.com (both one or two tildes, when they match, work).
 
 This package provides the low-level modules for integrating with the micromark
 tokenizer and the micromark HTML compiler.
-
-While GFM defines [strikethrough][], GitHub does not adhere to their
-specification.
-This syntax extension matches the GitHub parser, not the specification.
 
 You probably shouldn’t use this package directly, but instead use
 [`mdast-util-gfm-strikethrough`][mdast-util-gfm-strikethrough] with
@@ -34,15 +32,26 @@ npm install micromark-extension-gfm-strikethrough
 
 ### `html`
 
-### `syntax`
+### `syntax(options?)`
 
 > Note: `syntax` is the default export of this module, `html` is available at
 > `micromark-extension-gfm-strikethrough/html`.
 
 Support strikethrough (~~like this~~).
-The exports are extensions, respectively for the micromark parser (to tokenize
-strikethrough; can be passed in `extensions`) and the default HTML compiler
-(to compile as `<del>` elements; can be passed in `htmlExtensions`).
+The export of `syntax` is a function that can be called with options and returns
+an extension for the micromark parser (to tokenize strikethrough; can be passed
+in `extensions`).
+The export of `html` is an extension for the default HTML compiler (to compile
+as `<del>` elements; can be passed in `htmlExtensions`).
+
+##### `options`
+
+##### `options.singleTilde`
+
+Whether to support strikethrough with a single tilde (`boolean`, default:
+`true`).
+Single tildes work on github.com, but are technically prohibited by the GFM
+spec.
 
 ## Related
 
