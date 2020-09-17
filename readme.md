@@ -46,7 +46,7 @@ as `<del>` elements; can be passed in `htmlExtensions`).
 
 ##### `options`
 
-##### `options.singleTilde`
+###### `options.singleTilde`
 
 Whether to support strikethrough with a single tilde (`boolean`, default:
 `true`).
