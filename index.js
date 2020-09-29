@@ -1,8 +1,9 @@
 module.exports = create
 
 var classifyCharacter = require('micromark/dist/util/classify-character')
-var shallow = require('micromark/dist/util/shallow')
+var chunkedSplice = require('micromark/dist/util/chunked-splice')
 var resolveAll = require('micromark/dist/util/resolve-all')
+var shallow = require('micromark/dist/util/shallow')
 
 var characterGroupPunctuation = 2
 
@@ -22,17 +23,16 @@ function create(options) {
 
   // Take events and resolve strikethrough.
   function resolveAllStrikethrough(events, context) {
-    var length = events.length
     var index = -1
     var strikethrough
     var opening
     var closing
     var text
     var indexOpen
-    var eventsUpTo
+    var nextEvents
 
     // Walk through all events.
-    while (++index < length) {
+    while (++index < events.length) {
       closing = events[index][1]
 
       // Find a token that can close.
@@ -66,35 +66,42 @@ function create(options) {
               end: shallow(closing.start)
             }
 
-            eventsUpTo = [].concat(
-              // Before.
-              events.slice(0, indexOpen - 1),
-              // Opening.
-              [
-                ['enter', strikethrough, context],
-                ['enter', opening, context],
-                ['exit', opening, context],
-                ['enter', text, context]
-              ],
-              // Between.
+            // Opening.
+            nextEvents = [
+              ['enter', strikethrough, context],
+              ['enter', opening, context],
+              ['exit', opening, context],
+              ['enter', text, context]
+            ]
+
+            // Between.
+            chunkedSplice(
+              nextEvents,
+              nextEvents.length,
+              0,
               resolveAll(
                 context.parser.constructs.insideSpan.null,
                 events.slice(indexOpen + 1, index),
                 context
-              ),
-              // Closing.
-              [
-                ['exit', text, context],
-                ['enter', closing, context],
-                ['exit', closing, context],
-                ['exit', strikethrough, context]
-              ]
+              )
             )
 
-            // After.
-            events = eventsUpTo.concat(events.slice(index + 2))
-            length = events.length
-            index = eventsUpTo.length - 1
+            // Closing.
+            chunkedSplice(nextEvents, nextEvents.length, 0, [
+              ['exit', text, context],
+              ['enter', closing, context],
+              ['exit', closing, context],
+              ['exit', strikethrough, context]
+            ])
+
+            chunkedSplice(
+              events,
+              indexOpen - 1,
+              index - indexOpen + 3,
+              nextEvents
+            )
+
+            index = indexOpen + nextEvents.length - 2
             break
           }
         }
