@@ -1,6 +1,6 @@
 {
   "name": "micromark-extension-gfm-strikethrough",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "micromark extension to support GFM strikethrough",
   "license": "MIT",
   "keywords": [
