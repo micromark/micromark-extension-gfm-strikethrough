@@ -81,6 +81,15 @@ test('markdown -> html (micromark)', function (t) {
   )
 
   t.deepEqual(
+    micromark('~b.~.', {
+      extensions: [syntax({singleTilde: true})],
+      htmlExtensions: [html]
+    }),
+    '<p><del>b.</del>.</p>',
+    'should close if preceded and followed by punctuation (del)'
+  )
+
+  t.deepEqual(
     micromark('a ~b~ ~~c~~ d', {
       extensions: [syntax({singleTilde: false})],
       htmlExtensions: [html]
