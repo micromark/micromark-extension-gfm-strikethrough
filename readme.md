@@ -82,9 +82,9 @@ abide by its terms.
 
 <!-- Definitions -->
 
-[build-badge]: https://img.shields.io/travis/micromark/micromark-extension-gfm-strikethrough.svg
+[build-badge]: https://github.com/micromark/micromark-extension-gfm-strikethrough/workflows/main/badge.svg
 
-[build]: https://travis-ci.org/micromark/micromark-extension-gfm-strikethrough
+[build]: https://github.com/micromark/micromark-extension-gfm-strikethrough/actions
 
 [coverage-badge]: https://img.shields.io/codecov/c/github/micromark/micromark-extension-gfm-strikethrough.svg
 
