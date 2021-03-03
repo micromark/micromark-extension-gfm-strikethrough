@@ -28,6 +28,7 @@
   ],
   "types": "types/index.d.ts",
   "files": [
+    "types/*.d.ts",
     "lib/",
     "index.js",
     "html.js"
