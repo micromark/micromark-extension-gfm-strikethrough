@@ -26,6 +26,7 @@
   "contributors": [
     "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
   ],
+  "types": "types/index.d.ts",
   "files": [
     "lib/",
     "index.js",
@@ -35,6 +36,7 @@
     "micromark": "~2.11.0"
   },
   "devDependencies": {
+    "dtslint": "^4.0.0",
     "nyc": "^15.0.0",
     "prettier": "^2.0.0",
     "remark-cli": "^9.0.0",
@@ -46,7 +48,8 @@
     "format": "remark . -qfo && prettier . -w --loglevel warn && xo --fix",
     "test-api": "node test",
     "test-coverage": "nyc --reporter lcov tape test/index.js",
-    "test": "npm run format && npm run test-coverage"
+    "test-types": "dtslint types",
+    "test": "npm run format && npm run test-coverage && npm run test-types"
   },
   "nyc": {
     "check-coverage": true,
@@ -64,7 +67,8 @@
   },
   "xo": {
     "prettier": true,
-    "esnext": false
+    "esnext": false,
+    "ignores": ["types"]
   },
   "remarkConfig": {
     "plugins": [
