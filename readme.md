@@ -22,6 +22,9 @@ You probably shouldn’t use this package directly, but instead use
 
 ## Install
 
+This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c):
+Node 12+ is needed to use it and it must be `import`ed instead of `require`d.
+
 [npm][]:
 
 ```sh
@@ -30,19 +33,20 @@ npm install micromark-extension-gfm-strikethrough
 
 ## API
 
-### `html`
+This package exports the following identifiers: `gfmStrikethrough`,
+`gfmStrikethroughHtml`.
+There is no default export.
 
-### `syntax(options?)`
+### `gfmStrikethrough(options?)`
 
-> Note: `syntax` is the default export of this module, `html` is available at
-> `micromark-extension-gfm-strikethrough/html`.
+### `gfmStrikethroughHtml`
 
 Support strikethrough (~~like this~~).
-The export of `syntax` is a function that can be called with options and returns
-an extension for the micromark parser (to tokenize strikethrough; can be passed
+`gfmStrikethrough` is a function that can be called with options and returns
+an extension for the micromark parser (to parse strikethrough; can be passed
 in `extensions`).
-The export of `html` is an extension for the default HTML compiler (to compile
-as `<del>` elements; can be passed in `htmlExtensions`).
+`gfmStrikethroughHtml` is an extension for the HTML compiler (to compile as
+`<del>` elements; can be passed in `htmlExtensions`).
 
 ##### `options`
 
