@@ -8,17 +8,16 @@
 [![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
-**[micromark][]** extension to support GitHub flavored markdown
+**[micromark][]** extension to support GitHub flavored markdown (GFM)
 [strikethrough][] (~~like this~~).
 This syntax extension matches either the GFM spec (only two tildes work) or
 github.com (both one or two tildes, when they match, work).
 
-This package provides the low-level modules for integrating with the micromark
-tokenizer and the micromark HTML compiler.
+## When to use this
 
-You probably shouldn’t use this package directly, but instead use
-[`mdast-util-gfm-strikethrough`][mdast-util-gfm-strikethrough] with
-**[mdast][]**.
+You should probably use [`micromark-extension-gfm`][micromark-extension-gfm]
+instead, which combines this package with other GFM features.
+Alternatively, if you don’t want all of GFM, use this package.
 
 ## Install
 
@@ -31,11 +30,39 @@ Node 12+ is needed to use it and it must be `import`ed instead of `require`d.
 npm install micromark-extension-gfm-strikethrough
 ```
 
+## Use
+
+```js
+import {micromark} from 'micromark'
+import {
+  gfmStrikethrough,
+  gfmStrikethroughHtml
+} from 'micromark-extension-gfm-strikethrough'
+
+const output = micromark('Some ~strikethrough~.', {
+  extensions: [gfmStrikethrough()],
+  htmlExtensions: [gfmStrikethroughHtml]
+})
+
+console.log(output)
+```
+
+Yields:
+
+```html
+<p>Some <del>strikethrough</del></p>.
+```
+
 ## API
 
 This package exports the following identifiers: `gfmStrikethrough`,
 `gfmStrikethroughHtml`.
 There is no default export.
+
+The export map supports the endorsed
+[`development` condition](https://nodejs.org/api/packages.html#packages_resolving_user_conditions).
+Run `node --conditions development module.js` to get instrumented dev code.
+Without this condition, production code is loaded.
 
 ### `gfmStrikethrough(options?)`
 
@@ -43,10 +70,10 @@ There is no default export.
 
 Support strikethrough (~~like this~~).
 `gfmStrikethrough` is a function that can be called with options and returns
-an extension for the micromark parser (to parse strikethrough; can be passed
-in `extensions`).
-`gfmStrikethroughHtml` is an extension for the HTML compiler (to compile as
-`<del>` elements; can be passed in `htmlExtensions`).
+an extension for micromark to parse strikethrough (can be passed in
+`extensions`).
+`gfmStrikethroughHtml` is an extension for micromark to compile as `<del>`
+elements (can be passed in `htmlExtensions`).
 
 ##### `options`
 
@@ -61,10 +88,16 @@ spec.
 
 *   [`remarkjs/remark`][remark]
     — markdown processor powered by plugins
+*   [`remarkjs/remark-gfm`](https://github.com/remarkjs/remark-gfm)
+    — remark plugin using this and other GFM features
 *   [`micromark/micromark`][micromark]
     — the smallest commonmark-compliant markdown parser that exists
+*   [`micromark/micromark-extension-gfm`][micromark-extension-gfm]
+    — micromark extension combining this with other GFM features
 *   [`syntax-tree/mdast-util-gfm-strikethrough`][mdast-util-gfm-strikethrough]
     — mdast utility to support strikethrough
+*   [`syntax-tree/mdast-util-gfm`](https://github.com/syntax-tree/mdast-util-gfm)
+    — mdast utility to support GFM
 *   [`syntax-tree/mdast-util-from-markdown`][from-markdown]
     — mdast parser using `micromark` to create mdast from markdown
 *   [`syntax-tree/mdast-util-to-markdown`][to-markdown]
@@ -132,8 +165,8 @@ abide by its terms.
 
 [remark]: https://github.com/remarkjs/remark
 
-[mdast]: https://github.com/syntax-tree/mdast
-
 [mdast-util-gfm-strikethrough]: https://github.com/syntax-tree/mdast-util-gfm-strikethrough
 
 [strikethrough]: https://github.github.com/gfm/#strikethrough-extension-
+
+[micromark-extension-gfm]: https://github.com/micromark/micromark-extension-gfm
