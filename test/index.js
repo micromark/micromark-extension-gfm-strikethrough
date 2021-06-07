@@ -7,11 +7,11 @@ import {
   gfmStrikethroughHtml as html
 } from '../index.js'
 
-var input = fs.readFileSync(path.join('test', 'input.md'))
-var output = fs.readFileSync(path.join('test', 'output.html'), 'utf8')
+const input = fs.readFileSync(path.join('test', 'input.md'))
+const output = fs.readFileSync(path.join('test', 'output.html'), 'utf8')
 
-test('markdown -> html (micromark)', function (t) {
-  var defaults = syntax()
+test('markdown -> html (micromark)', (t) => {
+  const defaults = syntax()
 
   t.deepEqual(
     micromark('a ~b~', {
