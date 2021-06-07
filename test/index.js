@@ -5,7 +5,7 @@ import {micromark} from 'micromark'
 import {
   gfmStrikethrough as syntax,
   gfmStrikethroughHtml as html
-} from '../index.js'
+} from '../dev/index.js'
 
 const input = fs.readFileSync(path.join('test', 'input.md'))
 const output = fs.readFileSync(path.join('test', 'output.html'), 'utf8')

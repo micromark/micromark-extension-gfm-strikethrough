@@ -1,10 +1,12 @@
+import {splice} from 'micromark-util-chunked'
 import {classifyCharacter} from 'micromark-util-classify-character'
 import {resolveAll} from 'micromark-util-resolve-all'
-import {splice} from 'micromark-util-chunked'
+import {codes} from 'micromark-util-symbol/codes.js'
+import {constants} from 'micromark-util-symbol/constants.js'
+import {types} from 'micromark-util-symbol/types.js'
 
-export function gfmStrikethrough(options) {
-  const settings = options || {}
-  let single = settings.singleTilde
+export function gfmStrikethrough(options = {}) {
+  let single = options.singleTilde
   const tokenizer = {
     tokenize: tokenizeStrikethrough,
     resolveAll: resolveAllStrikethrough
@@ -14,7 +16,7 @@ export function gfmStrikethrough(options) {
     single = true
   }
 
-  return {text: {126: tokenizer}, insideSpan: {null: tokenizer}}
+  return {text: {[codes.tilde]: tokenizer}, insideSpan: {null: tokenizer}}
 
   // Take events and resolve strikethrough.
   function resolveAllStrikethrough(events, context) {
@@ -106,7 +108,7 @@ export function gfmStrikethrough(options) {
 
     while (++index < length) {
       if (events[index][1].type === 'strikethroughSequenceTemporary') {
-        events[index][1].type = 'data'
+        events[index][1].type = types.data
       }
     }
 
@@ -122,9 +124,9 @@ export function gfmStrikethrough(options) {
 
     function start(code) {
       if (
-        code !== 126 ||
-        (previous === 126 &&
-          events[events.length - 1][1].type !== 'characterEscape')
+        code !== codes.tilde ||
+        (previous === codes.tilde &&
+          events[events.length - 1][1].type !== types.characterEscape)
       ) {
         return nok(code)
       }
@@ -136,7 +138,7 @@ export function gfmStrikethrough(options) {
     function more(code) {
       const before = classifyCharacter(previous)
 
-      if (code === 126) {
+      if (code === codes.tilde) {
         // If this is the third marker, exit.
         if (size > 1) return nok(code)
         effects.consume(code)
@@ -147,8 +149,9 @@ export function gfmStrikethrough(options) {
       if (size < 2 && !single) return nok(code)
       const token = effects.exit('strikethroughSequenceTemporary')
       const after = classifyCharacter(code)
-      token._open = !after || (after === 2 && before)
-      token._close = !before || (before === 2 && after)
+      token._open = !after || (after === constants.attentionSideAfter && before)
+      token._close =
+        !before || (before === constants.attentionSideAfter && after)
       return ok(code)
     }
   }
