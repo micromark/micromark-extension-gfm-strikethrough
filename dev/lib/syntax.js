@@ -1,3 +1,21 @@
+/**
+ * @typedef {import('micromark-util-types').Extension} Extension
+ * @typedef {import('micromark-util-types').Resolver} Resolver
+ * @typedef {import('micromark-util-types').Tokenizer} Tokenizer
+ * @typedef {import('micromark-util-types').State} State
+ * @typedef {import('micromark-util-types').Token} Token
+ * @typedef {import('micromark-util-types').Event} Event
+ */
+
+/**
+ * @typedef Options
+ * @property {boolean} [singleTilde=true]
+ *   Whether to support strikethrough with a single tilde (`boolean`, default:
+ *   `true`).
+ *   Single tildes work on github.com, but are technically prohibited by the
+ *   GFM spec.
+ */
+
 import {splice} from 'micromark-util-chunked'
 import {classifyCharacter} from 'micromark-util-classify-character'
 import {resolveAll} from 'micromark-util-resolve-all'
@@ -5,6 +23,10 @@ import {codes} from 'micromark-util-symbol/codes.js'
 import {constants} from 'micromark-util-symbol/constants.js'
 import {types} from 'micromark-util-symbol/types.js'
 
+/**
+ * @param {Options} [options]
+ * @returns {Extension}
+ */
 export function gfmStrikethrough(options = {}) {
   let single = options.singleTilde
   const tokenizer = {
@@ -16,14 +38,22 @@ export function gfmStrikethrough(options = {}) {
     single = true
   }
 
-  return {text: {[codes.tilde]: tokenizer}, insideSpan: {null: tokenizer}}
+  return {text: {[codes.tilde]: tokenizer}, insideSpan: {null: [tokenizer]}}
 
-  // Take events and resolve strikethrough.
+  /**
+   * Take events and resolve strikethrough.
+   *
+   * @type {Resolver}
+   */
   function resolveAllStrikethrough(events, context) {
     let index = -1
+    /** @type {Token} */
     let strikethrough
+    /** @type {Token} */
     let text
+    /** @type {number} */
     let open
+    /** @type {Event[]} */
     let nextEvents
 
     // Walk through all events.
@@ -99,14 +129,9 @@ export function gfmStrikethrough(options = {}) {
       }
     }
 
-    return removeRemainingSequences(events)
-  }
+    index = -1
 
-  function removeRemainingSequences(events) {
-    let index = -1
-    const length = events.length
-
-    while (++index < length) {
+    while (++index < events.length) {
       if (events[index][1].type === 'strikethroughSequenceTemporary') {
         events[index][1].type = types.data
       }
@@ -115,6 +140,7 @@ export function gfmStrikethrough(options = {}) {
     return events
   }
 
+  /** @type {Tokenizer} */
   function tokenizeStrikethrough(effects, ok, nok) {
     const previous = this.previous
     const events = this.events
@@ -122,6 +148,7 @@ export function gfmStrikethrough(options = {}) {
 
     return start
 
+    /** @type {State} */
     function start(code) {
       if (
         code !== codes.tilde ||
@@ -135,6 +162,7 @@ export function gfmStrikethrough(options = {}) {
       return more(code)
     }
 
+    /** @type {State} */
     function more(code) {
       const before = classifyCharacter(previous)
 
@@ -149,9 +177,10 @@ export function gfmStrikethrough(options = {}) {
       if (size < 2 && !single) return nok(code)
       const token = effects.exit('strikethroughSequenceTemporary')
       const after = classifyCharacter(code)
-      token._open = !after || (after === constants.attentionSideAfter && before)
+      token._open =
+        !after || (after === constants.attentionSideAfter && Boolean(before))
       token._close =
-        !before || (before === constants.attentionSideAfter && after)
+        !before || (before === constants.attentionSideAfter && Boolean(after))
       return ok(code)
     }
   }
