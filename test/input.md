@@ -135,3 +135,45 @@ a ~one `code start ~~two two~~ code end` one~ b
 a ~one `code start ~one one~ code end` one~ b
 
 a ~~two `code start ~~two two~~ code end` two~~ b
+
+## Emphasis/strong/strikethrough interplay
+
+a ***~~xxx~~*** zzz
+
+b ***xxx***zzz
+
+c **xxx**zzz
+
+d *xxx*zzz
+
+e ***~~xxx~~***yyy
+
+f **~~xxx~~**yyy
+
+g *~~xxx~~*yyy
+
+h ***~~xxx~~*** zzz
+
+i **~~xxx~~** zzz
+
+j *~~xxx~~* zzz
+
+k ~~~**xxx**~~~ zzz
+
+l ~~~xxx~~~zzz
+
+m ~~xxx~~zzz
+
+n ~xxx~zzz
+
+o ~~~**xxx**~~~yyy
+
+p ~~**xxx**~~yyy
+
+r ~**xxx**~yyy
+
+s ~~~**xxx**~~~ zzz
+
+t ~~**xxx**~~ zzz
+
+u ~**xxx**~ zzz

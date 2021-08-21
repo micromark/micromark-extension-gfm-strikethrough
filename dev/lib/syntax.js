@@ -38,7 +38,11 @@ export function gfmStrikethrough(options = {}) {
     single = true
   }
 
-  return {text: {[codes.tilde]: tokenizer}, insideSpan: {null: [tokenizer]}}
+  return {
+    text: {[codes.tilde]: tokenizer},
+    insideSpan: {null: [tokenizer]},
+    attentionMarkers: {null: [codes.tilde]}
+  }
 
   /**
    * Take events and resolve strikethrough.
