@@ -16,6 +16,7 @@
  *   GFM spec.
  */
 
+import assert from 'power-assert'
 import {splice} from 'micromark-util-chunked'
 import {classifyCharacter} from 'micromark-util-classify-character'
 import {resolveAll} from 'micromark-util-resolve-all'
@@ -154,10 +155,11 @@ export function gfmStrikethrough(options = {}) {
 
     /** @type {State} */
     function start(code) {
+      assert(code === codes.tilde, 'expected `~`')
+
       if (
-        code !== codes.tilde ||
-        (previous === codes.tilde &&
-          events[events.length - 1][1].type !== types.characterEscape)
+        previous === codes.tilde &&
+        events[events.length - 1][1].type !== types.characterEscape
       ) {
         return nok(code)
       }
