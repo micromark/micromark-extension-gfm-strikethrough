@@ -52,14 +52,6 @@ export function gfmStrikethrough(options = {}) {
    */
   function resolveAllStrikethrough(events, context) {
     let index = -1
-    /** @type {Token} */
-    let strikethrough
-    /** @type {Token} */
-    let text
-    /** @type {number} */
-    let open
-    /** @type {Event[]} */
-    let nextEvents
 
     // Walk through all events.
     while (++index < events.length) {
@@ -69,7 +61,7 @@ export function gfmStrikethrough(options = {}) {
         events[index][1].type === 'strikethroughSequenceTemporary' &&
         events[index][1]._close
       ) {
-        open = index
+        let open = index
 
         // Now walk back to find an opener.
         while (open--) {
@@ -85,20 +77,20 @@ export function gfmStrikethrough(options = {}) {
             events[index][1].type = 'strikethroughSequence'
             events[open][1].type = 'strikethroughSequence'
 
-            strikethrough = {
+            const strikethrough = {
               type: 'strikethrough',
               start: Object.assign({}, events[open][1].start),
               end: Object.assign({}, events[index][1].end)
             }
 
-            text = {
+            const text = {
               type: 'strikethroughText',
               start: Object.assign({}, events[open][1].end),
               end: Object.assign({}, events[index][1].start)
             }
 
             // Opening.
-            nextEvents = [
+            const nextEvents = [
               ['enter', strikethrough, context],
               ['enter', events[open][1], context],
               ['exit', events[open][1], context],
