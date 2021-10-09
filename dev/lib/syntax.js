@@ -16,7 +16,7 @@
  *   GFM spec.
  */
 
-import assert from 'power-assert'
+import {ok as assert} from 'uvu/assert'
 import {splice} from 'micromark-util-chunked'
 import {classifyCharacter} from 'micromark-util-classify-character'
 import {resolveAll} from 'micromark-util-resolve-all'
