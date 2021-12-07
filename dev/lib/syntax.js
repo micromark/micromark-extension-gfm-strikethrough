@@ -9,6 +9,7 @@
 
 /**
  * @typedef Options
+ *   Configuration (optional).
  * @property {boolean} [singleTilde=true]
  *   Whether to support strikethrough with a single tilde (`boolean`, default:
  *   `true`).
