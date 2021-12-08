@@ -8,8 +8,8 @@
 [![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
-**[micromark][]** extension to support GitHub Flavored Markdown (GFM)
-strikethrough.
+**[micromark][]** extension to support GitHub flavored markdown (GFM)
+[strikethrough][].
 
 ## Contents
 
@@ -30,8 +30,9 @@ strikethrough.
 ## What is this?
 
 This package is a micromark extension to add support for GFM strikethrough.
-Strikethrough on `github.com` can use one (`~one~`) or two (`~~two~~`) tildes.
-You can also strictly match their spec instead of there implementation, by
+Strikethrough on `github.com`, which this extension matches, can use one
+(`~one~`) or two (`~~two~~`) tildes.
+You can also strictly match the GFM spec instead of their implementation by
 passing `singleTilde: false`.
 
 ## When to use this
@@ -198,11 +199,11 @@ abide by its terms.
 
 [author]: https://wooorm.com
 
-[contributing]: https://github.com/micromark/.github/blob/HEAD/contributing.md
+[contributing]: https://github.com/micromark/.github/blob/main/contributing.md
 
-[support]: https://github.com/micromark/.github/blob/HEAD/support.md
+[support]: https://github.com/micromark/.github/blob/main/support.md
 
-[coc]: https://github.com/micromark/.github/blob/HEAD/code-of-conduct.md
+[coc]: https://github.com/micromark/.github/blob/main/code-of-conduct.md
 
 [esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
 
@@ -219,3 +220,5 @@ abide by its terms.
 [mdast-util-gfm]: https://github.com/syntax-tree/mdast-util-gfm
 
 [remark-gfm]: https://github.com/remarkjs/remark-gfm
+
+[strikethrough]: https://github.github.com/gfm/#strikethrough-extension-

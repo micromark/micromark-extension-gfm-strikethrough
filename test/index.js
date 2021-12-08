@@ -1,14 +1,13 @@
-import fs from 'fs'
-import path from 'path'
+import {URL} from 'node:url'
+import fs from 'node:fs'
+import path from 'node:path'
 import test from 'tape'
 import {micromark} from 'micromark'
+import {createGfmFixtures} from 'create-gfm-fixtures'
 import {
   gfmStrikethrough as syntax,
   gfmStrikethroughHtml as html
 } from '../dev/index.js'
-
-const input = fs.readFileSync(path.join('test', 'input.md'))
-const output = fs.readFileSync(path.join('test', 'output.html'), 'utf8')
 
 test('markdown -> html (micromark)', (t) => {
   const defaults = syntax()
@@ -38,12 +37,6 @@ test('markdown -> html (micromark)', (t) => {
     }),
     '<p>a ~~~b~~~</p>',
     'should not support strikethrough w/ three tildes'
-  )
-
-  t.deepEqual(
-    micromark(input, {extensions: [defaults], htmlExtensions: [html]}),
-    output,
-    'should support strikethrough matching how GH does it'
   )
 
   t.deepEqual(
@@ -108,6 +101,33 @@ test('markdown -> html (micromark)', (t) => {
     '<p>a <del>b</del> <del>c</del> d</p>',
     'should support strikethrough w/ one tilde if `singleTilde: true`'
   )
+
+  t.end()
+})
+
+test('fixtures', async (t) => {
+  const base = new URL('fixtures/', import.meta.url)
+
+  await createGfmFixtures(base, {rehypeStringify: {closeSelfClosing: true}})
+
+  const files = fs.readdirSync(base).filter((d) => /\.md$/.test(d))
+  let index = -1
+
+  while (++index < files.length) {
+    const name = path.basename(files[index], '.md')
+    const input = fs.readFileSync(new URL(name + '.md', base))
+    const expected = String(fs.readFileSync(new URL(name + '.html', base)))
+    let actual = micromark(input, {
+      extensions: [syntax()],
+      htmlExtensions: [html]
+    })
+
+    if (actual && !/\n$/.test(actual)) {
+      actual += '\n'
+    }
+
+    t.deepEqual(actual, expected, name)
+  }
 
   t.end()
 })
