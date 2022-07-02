@@ -8,8 +8,7 @@
 [![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
-**[micromark][]** extension to support GitHub flavored markdown (GFM)
-[strikethrough][].
+[micromark][] extension support GFM [strikethrough][].
 
 ## Contents
 
@@ -20,6 +19,10 @@
 *   [API](#api)
     *   [`gfmStrikethrough(options?)`](#gfmstrikethroughoptions)
     *   [`gfmStrikethroughHtml`](#gfmstrikethroughhtml)
+*   [Authoring](#authoring)
+*   [HTML](#html)
+*   [CSS](#css)
+*   [Syntax](#syntax)
 *   [Types](#types)
 *   [Compatibility](#compatibility)
 *   [Security](#security)
@@ -29,30 +32,30 @@
 
 ## What is this?
 
-This package is a micromark extension to add support for GFM strikethrough.
+This package contains extensions that add support for strikethrough as enabled
+by GFM to [`micromark`][micromark].
 Strikethrough on `github.com`, which this extension matches, can use one
 (`~one~`) or two (`~~two~~`) tildes.
-You can also strictly match the GFM spec instead of their implementation by
-passing `singleTilde: false`.
+The GFM spec strictly prohibits one tilde to be used.
+That behavior can be used by passing `singleTilde: false`.
 
 ## When to use this
 
-In many cases, when working with micromark, you’d want to use
-[`micromark-extension-gfm`][micromark-extension-gfm] instead, which combines
-this package with other GFM features.
+These tools are all low-level.
+In many cases, you want to use [`remark-gfm`][plugin] with remark instead.
 
-When working with syntax trees, you’d want to combine this package with
-[`mdast-util-gfm-strikethrough`][mdast-util-gfm-strikethrough] (or
-[`mdast-util-gfm`][mdast-util-gfm] when using `micromark-extension-gfm`).
+Even when you want to use `micromark`, you likely want to use
+[`micromark-extension-gfm`][micromark-extension-gfm] to support all GFM
+features.
+That extension includes this extension.
 
-These tools are all rather low-level.
-In most cases, you’d instead want to use [`remark-gfm`][remark-gfm] with
-[remark][].
+When working with `mdast-util-from-markdown`, you must combine this package with
+[`mdast-util-gfm-strikethrough`][util].
 
 ## Install
 
 This package is [ESM only][esm].
-In Node.js (version 12.20+, 14.14+, or 16.0+), install with [npm][]:
+In Node.js (version 12.20+, 14.14+, 16.0+, or 18.0+), install with [npm][]:
 
 ```sh
 npm install micromark-extension-gfm-strikethrough
@@ -97,19 +100,18 @@ Yields:
 
 ## API
 
-This package exports the following identifiers: `gfmStrikethrough`,
+This package exports the identifiers `gfmStrikethrough` and
 `gfmStrikethroughHtml`.
 There is no default export.
 
-The export map supports the endorsed
-[`development` condition](https://nodejs.org/api/packages.html#packages_resolving_user_conditions).
+The export map supports the endorsed [`development` condition][condition].
 Run `node --conditions development module.js` to get instrumented dev code.
 Without this condition, production code is loaded.
 
 ### `gfmStrikethrough(options?)`
 
-A function that can be called to get an extension for micromark to parse
-GFM strikethrough (can be passed in `extensions`).
+Function that can be called to get a syntax extension for micromark (passed in
+`extensions`).
 
 ##### `options`
 
@@ -119,21 +121,51 @@ Configuration (optional).
 
 Whether to support strikethrough with a single tilde (`boolean`, default:
 `true`).
-Single tildes work on github.com, but are technically prohibited by GFM.
+Single tildes work on github.com but are technically prohibited by GFM.
 
 ### `gfmStrikethroughHtml`
 
-An extension to compile them to HTML (can be passed in `htmlExtensions`).
+HTML extension for micromark (passed in `htmlExtensions`).
+
+## Authoring
+
+When authoring markdown with strikethrough, it’s recommended to stick to two
+tildes for each run.
+That makes sure it works in most places.
+
+## HTML
+
+GFM task list items relate to the `<del>` element in HTML.
+See [*§ 4.7.2 The `del` element*][html-del] in the HTML spec for more info.
+
+## CSS
+
+GitHub itself does not apply interesting CSS to `del` elements.
+It currently (July 2022) does change `code` in `del`.
+
+```css
+del code {
+  text-decoration: inherit;
+}
+```
+
+For the complete actual CSS see
+[`sindresorhus/github-markdown-css`][github-markdown-css].
+
+## Syntax
+
+Strikethrough parses like other attention (emphasis, strong), which means that
+it gets *really* complex and a BNF grammar cannot do it justice.
 
 ## Types
 
 This package is fully typed with [TypeScript][].
-It exports additional `Options` type that models its respective interface.
+It exports the additional type `Options`.
 
 ## Compatibility
 
 This package is at least compatible with all maintained versions of Node.js.
-As of now, that is Node.js 12.20+, 14.14+, and 16.0+.
+As of now, that is Node.js 12.20+, 14.14+, 16.0+, and 18.0+.
 It also works in Deno and modern browsers.
 
 ## Security
@@ -142,11 +174,11 @@ This package is safe.
 
 ## Related
 
-*   [`syntax-tree/mdast-util-gfm-strikethrough`][mdast-util-gfm-strikethrough]
+*   [`syntax-tree/mdast-util-gfm-strikethrough`][util]
     — support GFM strikethrough in mdast
 *   [`syntax-tree/mdast-util-gfm`][mdast-util-gfm]
     — support GFM in mdast
-*   [`remarkjs/remark-gfm`][remark-gfm]
+*   [`remarkjs/remark-gfm`][plugin]
     — support GFM in remark
 
 ## Contribute
@@ -209,16 +241,20 @@ abide by its terms.
 
 [typescript]: https://www.typescriptlang.org
 
-[micromark]: https://github.com/micromark/micromark
+[condition]: https://nodejs.org/api/packages.html#packages_resolving_user_conditions
 
-[remark]: https://github.com/remarkjs/remark
+[micromark]: https://github.com/micromark/micromark
 
 [micromark-extension-gfm]: https://github.com/micromark/micromark-extension-gfm
 
-[mdast-util-gfm-strikethrough]: https://github.com/syntax-tree/mdast-util-gfm-strikethrough
+[util]: https://github.com/syntax-tree/mdast-util-gfm-strikethrough
 
 [mdast-util-gfm]: https://github.com/syntax-tree/mdast-util-gfm
 
-[remark-gfm]: https://github.com/remarkjs/remark-gfm
+[plugin]: https://github.com/remarkjs/remark-gfm
 
 [strikethrough]: https://github.github.com/gfm/#strikethrough-extension-
+
+[github-markdown-css]: https://github.com/sindresorhus/github-markdown-css
+
+[html-del]: https://html.spec.whatwg.org/multipage/edits.html#the-del-element
