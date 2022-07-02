@@ -8,7 +8,7 @@
 [![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
-[micromark][] extension support GFM [strikethrough][].
+[micromark][] extension to support GFM [strikethrough][].
 
 ## Contents
 
