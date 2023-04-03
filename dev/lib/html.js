@@ -2,6 +2,8 @@
  * @typedef {import('micromark-util-types').HtmlExtension} HtmlExtension
  */
 
+// To do: next major: expose function instead of object.
+
 /**
  * HTML extension for micromark (passed in `htmlExtensions`).
  *

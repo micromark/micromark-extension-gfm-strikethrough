@@ -1,9 +1,9 @@
 /**
  * @typedef {import('micromark-util-types').Extension} Extension
  * @typedef {import('micromark-util-types').Resolver} Resolver
+ * @typedef {import('micromark-util-types').State} State
  * @typedef {import('micromark-util-types').TokenizeContext} TokenizeContext
  * @typedef {import('micromark-util-types').Tokenizer} Tokenizer
- * @typedef {import('micromark-util-types').State} State
  *
  * @typedef Options
  *   Configuration (optional).
@@ -26,13 +26,14 @@ import {types} from 'micromark-util-symbol/types.js'
  * Function that can be called to get a syntax extension for micromark (passed
  * in `extensions`).
  *
- * @param {Options} [options]
+ * @param {Options | null | undefined} [options]
  *   Configuration (optional).
  * @returns {Extension}
  *   Syntax extension for micromark (passed in `extensions`).
  */
-export function gfmStrikethrough(options = {}) {
-  let single = options.singleTilde
+export function gfmStrikethrough(options) {
+  const options_ = options || {}
+  let single = options_.singleTilde
   const tokenizer = {
     tokenize: tokenizeStrikethrough,
     resolveAll: resolveAllStrikethrough
