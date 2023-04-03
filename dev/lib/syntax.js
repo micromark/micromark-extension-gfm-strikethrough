@@ -100,17 +100,18 @@ export function gfmStrikethrough(options = {}) {
               ['enter', text, context]
             ]
 
-            // Between.
-            splice(
-              nextEvents,
-              nextEvents.length,
-              0,
-              resolveAll(
-                context.parser.constructs.insideSpan.null,
-                events.slice(open + 1, index),
-                context
+            const insideSpan = context.parser.constructs.insideSpan.null
+
+            if (insideSpan) {
+              // Between.
+              splice(
+                nextEvents,
+                nextEvents.length,
+                0,
+                // @ts-expect-error: to do: update `mdast-util-types` to allow explicit `undefined`s.
+                resolveAll(insideSpan, events.slice(open + 1, index), context)
               )
-            )
+            }
 
             // Closing.
             splice(nextEvents, nextEvents.length, 0, [
