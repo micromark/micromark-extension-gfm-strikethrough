@@ -8,8 +8,8 @@
  * @typedef Options
  *   Configuration (optional).
  * @property {boolean} [singleTilde=true]
- *   Whether to support strikethrough with a single tilde (`boolean`, default:
- *   `true`).
+ *   Whether to support strikethrough with a single tilde.
+ *
  *   Single tildes work on github.com, but are technically prohibited by the
  *   GFM spec.
  */
@@ -23,13 +23,13 @@ import {constants} from 'micromark-util-symbol/constants.js'
 import {types} from 'micromark-util-symbol/types.js'
 
 /**
- * Function that can be called to get a syntax extension for micromark (passed
- * in `extensions`).
+ * Create an extension for `micromark` to enable GFM strikethrough syntax.
  *
  * @param {Options | null | undefined} [options]
- *   Configuration (optional).
+ *   Configuration.
  * @returns {Extension}
- *   Syntax extension for micromark (passed in `extensions`).
+ *   Extension for `micromark` that can be passed in `extensions`, to
+ *   enable GFM strikethrough syntax.
  */
 export function gfmStrikethrough(options) {
   const options_ = options || {}
