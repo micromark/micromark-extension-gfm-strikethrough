@@ -84,7 +84,15 @@
       "n/file-extension-in-import": "off",
       "max-depth": "off",
       "unicorn/prefer-node-protocol": "off"
-    }
+    },
+    "overrides": [
+      {
+        "files": "test/**/*.js",
+        "rules": {
+          "no-await-in-loop": 0
+        }
+      }
+    ]
   },
   "remarkConfig": {
     "plugins": [
