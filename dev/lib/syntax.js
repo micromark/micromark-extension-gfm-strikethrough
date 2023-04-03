@@ -1,6 +1,7 @@
 /**
  * @typedef {import('micromark-util-types').Extension} Extension
  * @typedef {import('micromark-util-types').Resolver} Resolver
+ * @typedef {import('micromark-util-types').TokenizeContext} TokenizeContext
  * @typedef {import('micromark-util-types').Tokenizer} Tokenizer
  * @typedef {import('micromark-util-types').State} State
  *
@@ -139,7 +140,10 @@ export function gfmStrikethrough(options = {}) {
     return events
   }
 
-  /** @type {Tokenizer} */
+  /**
+   * @this {TokenizeContext}
+   * @type {Tokenizer}
+   */
   function tokenizeStrikethrough(effects, ok, nok) {
     const previous = this.previous
     const events = this.events
