@@ -6,7 +6,15 @@ import {createGfmFixtures} from 'create-gfm-fixtures'
 import {
   gfmStrikethrough as syntax,
   gfmStrikethroughHtml as html
-} from '../dev/index.js'
+} from 'micromark-extension-gfm-strikethrough'
+
+test('core', async () => {
+  assert.deepEqual(
+    Object.keys(await import('micromark-extension-gfm-strikethrough')).sort(),
+    ['gfmStrikethrough', 'gfmStrikethroughHtml'],
+    'should expose the public api'
+  )
+})
 
 test('markdown -> html (micromark)', () => {
   const defaults = syntax()
