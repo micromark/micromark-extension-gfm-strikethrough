@@ -1,7 +1,8 @@
+import assert from 'node:assert/strict'
 import {URL} from 'node:url'
 import fs from 'node:fs'
 import path from 'node:path'
-import test from 'tape'
+import test from 'node:test'
 import {micromark} from 'micromark'
 import {createGfmFixtures} from 'create-gfm-fixtures'
 import {
@@ -9,10 +10,10 @@ import {
   gfmStrikethroughHtml as html
 } from '../dev/index.js'
 
-test('markdown -> html (micromark)', (t) => {
+test('markdown -> html (micromark)', () => {
   const defaults = syntax()
 
-  t.deepEqual(
+  assert.deepEqual(
     micromark('a ~b~', {
       extensions: [defaults],
       htmlExtensions: [html]
@@ -21,7 +22,7 @@ test('markdown -> html (micromark)', (t) => {
     'should support strikethrough w/ one tilde'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     micromark('a ~~b~~', {
       extensions: [defaults],
       htmlExtensions: [html]
@@ -30,7 +31,7 @@ test('markdown -> html (micromark)', (t) => {
     'should support strikethrough w/ two tildes'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     micromark('a ~~~b~~~', {
       extensions: [defaults],
       htmlExtensions: [html]
@@ -39,7 +40,7 @@ test('markdown -> html (micromark)', (t) => {
     'should not support strikethrough w/ three tildes'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     micromark('a \\~~~b~~ c', {
       extensions: [defaults],
       htmlExtensions: [html]
@@ -48,7 +49,7 @@ test('markdown -> html (micromark)', (t) => {
     'should support strikethrough w/ after an escaped tilde'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     micromark('a ~~b ~~c~~ d~~ e', {
       extensions: [defaults],
       htmlExtensions: [html]
@@ -57,7 +58,7 @@ test('markdown -> html (micromark)', (t) => {
     'should support nested strikethrough'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     micromark('a ~-1~ b', {
       extensions: [defaults],
       htmlExtensions: [html]
@@ -66,7 +67,7 @@ test('markdown -> html (micromark)', (t) => {
     'should open if preceded by whitespace and followed by punctuation'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     micromark('a ~b.~ c', {
       extensions: [defaults],
       htmlExtensions: [html]
@@ -75,7 +76,7 @@ test('markdown -> html (micromark)', (t) => {
     'should close if preceded by punctuation and followed by whitespace'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     micromark('~b.~.', {
       extensions: [syntax({singleTilde: true})],
       htmlExtensions: [html]
@@ -84,7 +85,7 @@ test('markdown -> html (micromark)', (t) => {
     'should close if preceded and followed by punctuation (del)'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     micromark('a ~b~ ~~c~~ d', {
       extensions: [syntax({singleTilde: false})],
       htmlExtensions: [html]
@@ -93,7 +94,7 @@ test('markdown -> html (micromark)', (t) => {
     'should not support strikethrough w/ one tilde if `singleTilde: false`'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     micromark('a ~b~ ~~c~~ d', {
       extensions: [syntax({singleTilde: true})],
       htmlExtensions: [html]
@@ -101,11 +102,9 @@ test('markdown -> html (micromark)', (t) => {
     '<p>a <del>b</del> <del>c</del> d</p>',
     'should support strikethrough w/ one tilde if `singleTilde: true`'
   )
-
-  t.end()
 })
 
-test('fixtures', async (t) => {
+test('fixtures', async () => {
   const base = new URL('fixtures/', import.meta.url)
 
   await createGfmFixtures(base, {rehypeStringify: {closeSelfClosing: true}})
@@ -126,8 +125,6 @@ test('fixtures', async (t) => {
       actual += '\n'
     }
 
-    t.deepEqual(actual, expected, name)
+    assert.deepEqual(actual, expected, name)
   }
-
-  t.end()
 })
