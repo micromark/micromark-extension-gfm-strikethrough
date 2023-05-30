@@ -1,7 +1,9 @@
 /**
+ * @typedef {import('micromark-util-types').Event} Event
  * @typedef {import('micromark-util-types').Extension} Extension
  * @typedef {import('micromark-util-types').Resolver} Resolver
  * @typedef {import('micromark-util-types').State} State
+ * @typedef {import('micromark-util-types').Token} Token
  * @typedef {import('micromark-util-types').TokenizeContext} TokenizeContext
  * @typedef {import('micromark-util-types').Tokenizer} Tokenizer
  *
@@ -81,12 +83,14 @@ export function gfmStrikethrough(options) {
             events[index][1].type = 'strikethroughSequence'
             events[open][1].type = 'strikethroughSequence'
 
+            /** @type {Token} */
             const strikethrough = {
               type: 'strikethrough',
               start: Object.assign({}, events[open][1].start),
               end: Object.assign({}, events[index][1].end)
             }
 
+            /** @type {Token} */
             const text = {
               type: 'strikethroughText',
               start: Object.assign({}, events[open][1].end),
@@ -94,6 +98,7 @@ export function gfmStrikethrough(options) {
             }
 
             // Opening.
+            /** @type {Array<Event>} */
             const nextEvents = [
               ['enter', strikethrough, context],
               ['enter', events[open][1], context],
@@ -109,7 +114,6 @@ export function gfmStrikethrough(options) {
                 nextEvents,
                 nextEvents.length,
                 0,
-                // @ts-expect-error: to do: update `mdast-util-types` to allow explicit `undefined`s.
                 resolveAll(insideSpan, events.slice(open + 1, index), context)
               )
             }
