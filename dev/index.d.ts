@@ -1,5 +1,5 @@
 export {gfmStrikethroughHtml} from './lib/html.js'
-export {gfmStrikethrough} from './lib/syntax.js'
+export {gfmStrikethrough, type Options} from './lib/syntax.js'
 
 declare module 'micromark-util-types' {
   // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
