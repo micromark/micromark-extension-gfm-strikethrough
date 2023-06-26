@@ -92,9 +92,7 @@
   "xo": {
     "prettier": true,
     "rules": {
-      "n/file-extension-in-import": "off",
-      "max-depth": "off",
-      "unicorn/prefer-node-protocol": "off"
+      "max-depth": "off"
     },
     "overrides": [
       {
