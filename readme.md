@@ -62,14 +62,14 @@ npm install micromark-extension-gfm-strikethrough
 In Deno with [`esm.sh`][esmsh]:
 
 ```js
-import {gfmStrikethrough, gfmStrikethroughHtml} from 'https://esm.sh/micromark-extension-gfm-strikethrough@1'
+import {gfmStrikethrough, gfmStrikethroughHtml} from 'https://esm.sh/micromark-extension-gfm-strikethrough@2'
 ```
 
 In browsers with [`esm.sh`][esmsh]:
 
 ```html
 <script type="module">
-  import {gfmStrikethrough, gfmStrikethroughHtml} from 'https://esm.sh/micromark-extension-gfm-strikethrough@1?bundle'
+  import {gfmStrikethrough, gfmStrikethroughHtml} from 'https://esm.sh/micromark-extension-gfm-strikethrough@2?bundle'
 </script>
 ```
 
