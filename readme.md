@@ -53,7 +53,7 @@ it easier to transform content by abstracting these internals away.
 ## Install
 
 This package is [ESM only][esm].
-In Node.js (version 14.14+), install with [npm][]:
+In Node.js (version 16+), install with [npm][]:
 
 ```sh
 npm install micromark-extension-gfm-strikethrough
@@ -84,7 +84,7 @@ import {
 
 const output = micromark('Some ~strikethrough~.', {
   extensions: [gfmStrikethrough()],
-  htmlExtensions: [gfmStrikethroughHtml]
+  htmlExtensions: [gfmStrikethroughHtml()]
 })
 
 console.log(output)
@@ -190,12 +190,15 @@ It exports the additional type [`Options`][api-options].
 
 ## Compatibility
 
-Projects maintained by the unified collective are compatible with all maintained
+Projects maintained by the unified collective are compatible with maintained
 versions of Node.js.
-As of now, that is Node.js 14.14+.
-Our projects sometimes work with older versions, but this is not guaranteed.
 
-These extensions work with `micromark` version 3+.
+When we cut a new major release, we drop support for unmaintained versions of
+Node.
+This means we try to keep the current release line,
+`micromark-extension-gfm-strikethrough@^1`, compatible with Node.js 12.
+
+This package works with `micromark` version `3` and later.
 
 ## Security
 
@@ -240,9 +243,9 @@ abide by its terms.
 
 [downloads]: https://www.npmjs.com/package/micromark-extension-gfm-strikethrough
 
-[size-badge]: https://img.shields.io/bundlephobia/minzip/micromark-extension-gfm-strikethrough.svg
+[size-badge]: https://img.shields.io/badge/dynamic/json?label=minzipped%20size&query=$.size.compressedSize&url=https://deno.bundlejs.com/?q=micromark-extension-gfm-strikethrough
 
-[size]: https://bundlephobia.com/result?p=micromark-extension-gfm-strikethrough
+[size]: https://bundlejs.com/?q=micromark-extension-gfm-strikethrough
 
 [sponsors-badge]: https://opencollective.com/unified/sponsors/badge.svg
 
