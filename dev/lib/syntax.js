@@ -20,9 +20,7 @@ import {ok as assert} from 'uvu/assert'
 import {splice} from 'micromark-util-chunked'
 import {classifyCharacter} from 'micromark-util-classify-character'
 import {resolveAll} from 'micromark-util-resolve-all'
-import {codes} from 'micromark-util-symbol/codes.js'
-import {constants} from 'micromark-util-symbol/constants.js'
-import {types} from 'micromark-util-symbol/types.js'
+import {codes, constants, types} from 'micromark-util-symbol'
 
 /**
  * Create an extension for `micromark` to enable GFM strikethrough syntax.
