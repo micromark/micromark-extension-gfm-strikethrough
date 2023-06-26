@@ -41,12 +41,12 @@
     "default": "./index.js"
   },
   "dependencies": {
+    "devlop": "^1.0.0",
     "micromark-util-chunked": "^2.0.0",
     "micromark-util-classify-character": "^2.0.0",
     "micromark-util-resolve-all": "^2.0.0",
     "micromark-util-symbol": "^2.0.0",
-    "micromark-util-types": "^2.0.0",
-    "uvu": "^0.5.0"
+    "micromark-util-types": "^2.0.0"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
