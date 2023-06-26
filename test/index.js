@@ -20,7 +20,7 @@ test('micromark-extension-gfm-strikethrough', async function (t) {
     assert.deepEqual(
       micromark('a ~b~', {
         extensions: [gfmStrikethrough()],
-        htmlExtensions: [gfmStrikethroughHtml]
+        htmlExtensions: [gfmStrikethroughHtml()]
       }),
       '<p>a <del>b</del></p>'
     )
@@ -30,7 +30,7 @@ test('micromark-extension-gfm-strikethrough', async function (t) {
     assert.deepEqual(
       micromark('a ~~b~~', {
         extensions: [gfmStrikethrough()],
-        htmlExtensions: [gfmStrikethroughHtml]
+        htmlExtensions: [gfmStrikethroughHtml()]
       }),
       '<p>a <del>b</del></p>'
     )
@@ -42,7 +42,7 @@ test('micromark-extension-gfm-strikethrough', async function (t) {
       assert.deepEqual(
         micromark('a ~~~b~~~', {
           extensions: [gfmStrikethrough()],
-          htmlExtensions: [gfmStrikethroughHtml]
+          htmlExtensions: [gfmStrikethroughHtml()]
         }),
         '<p>a ~~~b~~~</p>'
       )
@@ -55,7 +55,7 @@ test('micromark-extension-gfm-strikethrough', async function (t) {
       assert.deepEqual(
         micromark('a \\~~~b~~ c', {
           extensions: [gfmStrikethrough()],
-          htmlExtensions: [gfmStrikethroughHtml]
+          htmlExtensions: [gfmStrikethroughHtml()]
         }),
         '<p>a ~<del>b</del> c</p>'
       )
@@ -66,7 +66,7 @@ test('micromark-extension-gfm-strikethrough', async function (t) {
     assert.deepEqual(
       micromark('a ~~b ~~c~~ d~~ e', {
         extensions: [gfmStrikethrough()],
-        htmlExtensions: [gfmStrikethroughHtml]
+        htmlExtensions: [gfmStrikethroughHtml()]
       }),
       '<p>a <del>b <del>c</del> d</del> e</p>'
     )
@@ -78,7 +78,7 @@ test('micromark-extension-gfm-strikethrough', async function (t) {
       assert.deepEqual(
         micromark('a ~-1~ b', {
           extensions: [gfmStrikethrough()],
-          htmlExtensions: [gfmStrikethroughHtml]
+          htmlExtensions: [gfmStrikethroughHtml()]
         }),
         '<p>a <del>-1</del> b</p>'
       )
@@ -91,7 +91,7 @@ test('micromark-extension-gfm-strikethrough', async function (t) {
       assert.deepEqual(
         micromark('a ~b.~ c', {
           extensions: [gfmStrikethrough()],
-          htmlExtensions: [gfmStrikethroughHtml]
+          htmlExtensions: [gfmStrikethroughHtml()]
         }),
         '<p>a <del>b.</del> c</p>'
       )
@@ -104,7 +104,7 @@ test('micromark-extension-gfm-strikethrough', async function (t) {
       assert.deepEqual(
         micromark('~b.~.', {
           extensions: [gfmStrikethrough({singleTilde: true})],
-          htmlExtensions: [gfmStrikethroughHtml]
+          htmlExtensions: [gfmStrikethroughHtml()]
         }),
         '<p><del>b.</del>.</p>'
       )
@@ -117,7 +117,7 @@ test('micromark-extension-gfm-strikethrough', async function (t) {
       assert.deepEqual(
         micromark('a ~b~ ~~c~~ d', {
           extensions: [gfmStrikethrough({singleTilde: false})],
-          htmlExtensions: [gfmStrikethroughHtml]
+          htmlExtensions: [gfmStrikethroughHtml()]
         }),
         '<p>a ~b~ <del>c</del> d</p>'
       )
@@ -130,7 +130,7 @@ test('micromark-extension-gfm-strikethrough', async function (t) {
       assert.deepEqual(
         micromark('a ~b~ ~~c~~ d', {
           extensions: [gfmStrikethrough({singleTilde: true})],
-          htmlExtensions: [gfmStrikethroughHtml]
+          htmlExtensions: [gfmStrikethroughHtml()]
         }),
         '<p>a <del>b</del> <del>c</del> d</p>'
       )
@@ -158,7 +158,7 @@ test('fixtures', async function (t) {
       const expected = String(await fs.readFile(new URL(name + '.html', base)))
       let actual = micromark(input, {
         extensions: [gfmStrikethrough()],
-        htmlExtensions: [gfmStrikethroughHtml]
+        htmlExtensions: [gfmStrikethroughHtml()]
       })
 
       if (actual && !/\n$/.test(actual)) {

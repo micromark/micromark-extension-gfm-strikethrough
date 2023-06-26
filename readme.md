@@ -18,7 +18,7 @@
 *   [Use](#use)
 *   [API](#api)
     *   [`gfmStrikethrough(options?)`](#gfmstrikethroughoptions)
-    *   [`gfmStrikethroughHtml`](#gfmstrikethroughhtml)
+    *   [`gfmStrikethroughHtml()`](#gfmstrikethroughhtml)
     *   [`Options`](#options)
 *   [Authoring](#authoring)
 *   [HTML](#html)
@@ -121,7 +121,12 @@ Create an extension for `micromark` to enable GFM strikethrough syntax.
 Extension for `micromark` that can be passed in `extensions`, to
 enable GFM strikethrough syntax ([`Extension`][micromark-extension]).
 
-### `gfmStrikethroughHtml`
+### `gfmStrikethroughHtml()`
+
+Create an HTML extension for `micromark` to support GFM strikethrough when
+serializing to HTML.
+
+###### Returns
 
 Extension for `micromark` that can be passed in `htmlExtensions`, to support
 GFM strikethrough when serializing to HTML
