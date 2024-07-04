@@ -35,6 +35,7 @@ export function gfmStrikethrough(options) {
   const options_ = options || {}
   let single = options_.singleTilde
   const tokenizer = {
+    name: 'strikethrough',
     tokenize: tokenizeStrikethrough,
     resolveAll: resolveAllStrikethrough
   }
