@@ -100,7 +100,22 @@
       {
         "files": "**/*.ts",
         "rules": {
-          "@typescript-eslint/consistent-type-definitions": 0
+          "@typescript-eslint/array-type": [
+            "error",
+            {
+              "default": "generic"
+            }
+          ],
+          "@typescript-eslint/ban-types": [
+            "error",
+            {
+              "extendDefaults": true
+            }
+          ],
+          "@typescript-eslint/consistent-type-definitions": [
+            "error",
+            "interface"
+          ]
         }
       },
       {
