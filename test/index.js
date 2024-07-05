@@ -138,6 +138,19 @@ test('micromark-extension-gfm-strikethrough', async function (t) {
   )
 })
 
+await test.test(
+  'should skip strikethrough construct if `disable.null` includes `strikethrough`',
+  async function () {
+    assert.deepEqual(
+      micromark('a ~~b~~', {
+        extensions: [gfmStrikethrough(), {disable: {null: ['strikethrough']}}],
+        htmlExtensions: [gfmStrikethroughHtml()]
+      }),
+      '<p>a ~~b~~</p>'
+    )
+  }
+)
+
 test('fixtures', async function (t) {
   const base = new URL('fixtures/', import.meta.url)
 
