@@ -174,7 +174,7 @@ For the complete actual CSS see
 
 Strikethrough sequences form with the following BNF:
 
-```bnf
+```abnf
 gfmAttentionSequence ::= 1*"~"
 ```
 
