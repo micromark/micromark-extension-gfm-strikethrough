@@ -175,7 +175,7 @@ For the complete actual CSS see
 Strikethrough sequences form with the following BNF:
 
 ```bnf
-gfm_attention_sequence ::= 1*'~'
+gfmAttentionSequence ::= 1*"~"
 ```
 
 Sequences are matched together to form strikethrough based on which character
